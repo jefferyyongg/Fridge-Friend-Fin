@@ -38,11 +38,11 @@ public class HandleJSON {
         }
     }
 
-    public Fridge getFridge(){
-        Fridge fridge;
+    public List<String> getFridge(){
+        List<String> fridge;
         try(FileReader reader = new FileReader("src/util/Fridge.json")){
             Gson gson = new Gson();
-            fridge = gson.fromJson(reader, Fridge.class);
+            fridge = gson.fromJson(reader, List.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

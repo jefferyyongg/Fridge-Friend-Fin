@@ -6,8 +6,8 @@ import java.util.List;
 public class Fridge {
     private List<String> fridge;
 
-    public Fridge(Fridge fridge) {
-        this.fridge = fridge.getFridge() != null ? fridge.getFridge() : new ArrayList<>();
+    public Fridge(List<String> fridge) {
+        this.fridge = fridge != null ? fridge : new ArrayList<>();
     }
 
     public void toonFridge(){

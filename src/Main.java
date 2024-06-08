@@ -1,8 +1,10 @@
 import model.Fridge;
 import model.Recept;
 import model.ZoekObject;
+import util.ApiService;
 import util.HandleJSON;
 import util.QueryService;
+import util.SuggestionService;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -14,10 +16,10 @@ public class Main {
         System.out.println("\nMenu:\n1. \uD83C\uDF5DReceptenBoek Opties\n2. ❄\uFE0FFridge Opties\n3. Boodschappen\n4. EXIT");
     }
     public static void menuKeuzeRecept(){
-        System.out.println("\nReceptenBoek Menu:\n1. toon ReceptenBoek\n2. add Recept\n3. remove Recept");
+        System.out.println("\nReceptenBoek Menu:\n1. Toon ReceptenBoek\n2. Recept Toevoegen\n3. Recept Verwijderen\n4. Recept Suggesties");
     }
     public static void menuKeuzeFridge(){
-        System.out.println("\nFridge Menu:\n1. toon Fridge\n2. add Ingredient\n3. remove Ingredient\n");
+        System.out.println("\nFridge Menu:\n1. Toon Fridge\n2. Ingredient Toevoegen\n3. Ingredient Verwijderen\n");
     }
 
     public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
@@ -26,7 +28,8 @@ public class Main {
         HandleJSON handleJSON = new HandleJSON();
         ReceptenBoek receptenBoek = new ReceptenBoek(handleJSON.getReceptenBoek());
         Fridge fridge = new Fridge(handleJSON.getFridge());
-        QueryService queryService = new QueryService();
+        ApiService queryService = new QueryService();
+        ApiService suggestionService =  new SuggestionService();
 
         while(true){
             menuKeuze();
@@ -74,11 +77,41 @@ public class Main {
                                 }
                             }
                             break;
+                        case "4":
+                            System.out.println("=== Recipe Suggestions ===");
+                            String line = "";
+                            for(String ingredient : fridge.getFridge()){
+                                line += ingredient + ",";
+                            }
+                            ZoekObject zoekObject = suggestionService.handleResponse(suggestionService.handleRequest(line));
+
+                            int counter = 0;
+                            for (ZoekObject.ZoekResultaten recipe : zoekObject.getResults()) {
+                                System.out.printf(counter + ". " + "%s\n", recipe.getTitle());
+
+                                System.out.printf("✅ Used Ingredients: %d\n", recipe.getUsedIngredientCount());
+                                for(Recept.ExtendedIngredient e : recipe.getUsedIngredients()){
+                                    System.out.printf("Name: %s | Amount: %.2f | Unit: %s\n", e.getName(), e.getAmount(), e.getUnit());
+                                }
+                                System.out.println();
+
+                                System.out.printf("❌ Missed Ingredients: %d\n", recipe.getMissedIngredientCount());
+                                for(Recept.ExtendedIngredient e : recipe.getMissedIngredients()){
+                                    System.out.printf("Name: %s | Amount: %.2f | Unit: %s\n", e.getName(), e.getAmount(), e.getUnit());
+                                }
+                                System.out.println("---------------------------------------");
+                                counter++;
+                            }
+                            System.out.println("Voer index nummer in: ");
+                            int receptSuggestionindex = Integer.valueOf(scanner.nextLine());
+                            receptenBoek.addRecept(suggestionService.getRecept(zoekObject.getResults().get(receptSuggestionindex)));
+
+                            handleJSON.saveReceptenBoek(receptenBoek.getReceptenBoek());
+                            break;
                         default:
                             System.out.println("Ongeldige Invoer.");
                             break;
                     }
-                    handleJSON.saveReceptenBoek(receptenBoek.getReceptenBoek());
                     break;
                 //Fridge Keuze
                 case "2":
@@ -116,7 +149,6 @@ public class Main {
                             System.out.println("Ongeldige Invoer.");
                             break;
                     }
-                    handleJSON.saveFridge(fridge.getFridge());
                     break;
                 case "3":
                     break;

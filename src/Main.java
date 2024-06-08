@@ -1,3 +1,4 @@
+import model.Fridge;
 import model.Recept;
 import model.ZoekObject;
 import util.HandleJSON;
@@ -5,14 +6,12 @@ import util.QueryService;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void menuKeuze(){
-        System.out.println("\nMenu:\n1. \uD83C\uDF5DReceptenBoek Opties\n2. ❄\uFE0FFridge Opties\n3. EXIT");
+        System.out.println("\nMenu:\n1. \uD83C\uDF5DReceptenBoek Opties\n2. ❄\uFE0FFridge Opties\n3. Boodschappen\n4. EXIT");
     }
     public static void menuKeuzeRecept(){
         System.out.println("\nReceptenBoek Menu:\n1. toon ReceptenBoek\n2. add Recept\n3. remove Recept");
@@ -26,7 +25,7 @@ public class Main {
 
         HandleJSON handleJSON = new HandleJSON();
         ReceptenBoek receptenBoek = new ReceptenBoek(handleJSON.getReceptenBoek());
-        Fridge fridge = new Fridge();
+        Fridge fridge = new Fridge(handleJSON.getFridge());
         QueryService queryService = new QueryService();
 
         while(true){
@@ -40,7 +39,7 @@ public class Main {
                     switch (receptKeuze) {
                         case "1":
                             System.out.println("=== ReceptenBoek ===");
-                            receptenBoek.toonRecepten();
+                            receptenBoek.toonReceptenBoek();
                             break;
                         case "2":
                             System.out.println("=== Recept Toevoegen ===");
@@ -66,12 +65,14 @@ public class Main {
                                 System.out.println("Geen Recepten.\n");
                                 break;
                             } else {
-                                for (int i = 0; i < receptenBoek.getReceptenBoek().size(); i++) {
-                                    System.out.println(i + ". " + receptenBoek.getReceptenBoek().get(i).getTitle());
+                                receptenBoek.toonReceptenBoek();
+                                int receptVerwijderIndex = Integer.valueOf(scanner.nextLine());
+                                if(receptVerwijderIndex > receptenBoek.getReceptenBoek().size()){
+                                    System.out.println("Ongeldige Invoer.");
+                                } else {
+                                    receptenBoek.removeRecept(receptVerwijderIndex);
                                 }
                             }
-                            int receptVerwijderIndex = Integer.valueOf(scanner.nextLine());
-                            receptenBoek.removeRecept(receptVerwijderIndex);
                             break;
                         default:
                             System.out.println("Ongeldige Invoer.");
@@ -85,15 +86,43 @@ public class Main {
                     String fridgeKeuze = scanner.nextLine();
                     switch (fridgeKeuze) {
                         case "1":
-                            System.out.println("=== Fridge Fridge ===");
+                            System.out.println("=== Fridge ===");
+                            fridge.toonFridge();
+                            break;
                         case "2":
-                            System.out.println("=== Fridge Fridge ===");
+                            System.out.println("=== Ingredient Toevoegen ===");
+                            System.out.println("Geef Ingredient: ");
+                            String ingredientToevoegenInput = scanner.nextLine();
+                            fridge.addIngredient(ingredientToevoegenInput);
+                            handleJSON.saveFridge(fridge.getFridge());
+                            break;
                         case "3":
-
+                            System.out.println("=== Ingredient Verwijeren ===");
+                            if(fridge.getFridge().isEmpty()){
+                                System.out.println("Geen Ingredienten.");
+                                break;
+                            } else {
+                                fridge.toonFridge();
+                                int ingredientVerwijderIndex = Integer.valueOf(scanner.nextLine());
+                                if(ingredientVerwijderIndex > fridge.getFridge().size()){
+                                    System.out.println("Ongeldige Invoer.");
+                                } else {
+                                    fridge.removeIngredient(ingredientVerwijderIndex);
+                                }
+                            }
+                            handleJSON.saveFridge(fridge.getFridge());
+                            break;
+                        default:
+                            System.out.println("Ongeldige Invoer.");
+                            break;
                     }
+                    handleJSON.saveFridge(fridge.getFridge());
                     break;
                 case "3":
+                    break;
+                case "4":
                     handleJSON.saveReceptenBoek(receptenBoek.getReceptenBoek());
+                    handleJSON.saveFridge(fridge.getFridge());
                     System.out.println("Programma afsluiten...");
                     return;
                 default:

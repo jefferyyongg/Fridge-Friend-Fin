@@ -3,6 +3,7 @@ package util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import model.Fridge;
 import model.Recept;
 
 import java.io.FileReader;
@@ -32,6 +33,28 @@ public class HandleJSON {
 
         try (FileWriter writer = new FileWriter("src/util/ReceptenBoek.json")) {
             gson.toJson(receptenBoek, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Fridge getFridge(){
+        Fridge fridge;
+        try(FileReader reader = new FileReader("src/util/Fridge.json")){
+            Gson gson = new Gson();
+            fridge = gson.fromJson(reader, Fridge.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return fridge;
+    }
+
+    public void saveFridge(List<String> fridge){
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try (FileWriter writer = new FileWriter("src/util/Fridge.json")) {
+            gson.toJson(fridge, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }

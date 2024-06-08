@@ -1,5 +1,4 @@
 import model.Recept;
-import util.HandleJSON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ public class ReceptenBoek {
         this.receptenBoek = receptenBoek != null ? receptenBoek : new ArrayList<>();
     }
 
-    public void toonRecepten(){
+    public void toonReceptenBoek(){
         if(receptenBoek.isEmpty()){
             System.out.println("Geen Recepten\n");
         } else {
@@ -22,6 +21,7 @@ public class ReceptenBoek {
     }
     public void addRecept(Recept recept){
         receptenBoek.add(recept);
+        System.out.println("Recept Toegevoegd.");
     }
 
     public void removeRecept(int index){
@@ -30,8 +30,9 @@ public class ReceptenBoek {
         }
         else if(index < receptenBoek.size()){
             receptenBoek.remove(index);
+            System.out.println("Recept Verwijderd.");
         } else {
-            System.out.println("ongeldige invoer");
+            System.out.println("Ongeldige Invoer");
         }
     }
 

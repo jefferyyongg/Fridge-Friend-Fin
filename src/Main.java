@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void menuKeuze(){
-        System.out.println("\nMenu:\n1. \uD83C\uDF5DReceptenBoek Opties\n2. ❄\uFE0FFridge Opties\n3. Boodschappen\n4. EXIT");
+        System.out.println("\nMenu:\n1. \uD83C\uDF5DReceptenBoek Opties\n2. ❄\uFE0FFridge Opties\n3. \uD83D\uDDD2\uFE0FBoodschappenLijst Tonen\n4. EXIT");
     }
     public static void menuKeuzeRecept(){
         System.out.println("\nReceptenBoek Menu:\n1. Toon ReceptenBoek\n2. Recept Toevoegen\n3. Recept Verwijderen\n4. Recept Suggesties");
@@ -30,6 +30,7 @@ public class Main {
         Fridge fridge = new Fridge(handleJSON.getFridge());
         ApiService queryService = new QueryService();
         ApiService suggestionService =  new SuggestionService();
+        BoodschappenLijst boodschappenLijst = new BoodschappenLijst(handleJSON.getBoodschappenLijst(), fridge);
 
         while(true){
             menuKeuze();
@@ -151,6 +152,12 @@ public class Main {
                     }
                     break;
                 case "3":
+                    fridge.getUniqueIngredients(receptenBoek.getIngredienten());
+                    handleJSON.saveBoodschappenLijst(boodschappenLijst.getBoodschappenLijst());
+                    System.out.println("=== Boodschappen Lijst ===");
+                    for(String s : boodschappenLijst.getBoodschappenLijst()){
+                        System.out.println(s);
+                    }
                     break;
                 case "4":
                     handleJSON.saveReceptenBoek(receptenBoek.getReceptenBoek());

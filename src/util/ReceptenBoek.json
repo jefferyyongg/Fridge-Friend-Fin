@@ -1,35 +1,5 @@
 [
   {
-    "id": 715538,
-    "title": "What to make for dinner tonight?? Bruschetta Style Pork \u0026 Pasta",
-    "extendedIngredients": [
-      {
-        "amount": 3.0,
-        "id": 10120420,
-        "name": "bow tie pasta",
-        "unit": "cups"
-      },
-      {
-        "amount": 0.5,
-        "id": 1033,
-        "name": "parmigiano reggiano",
-        "unit": "cup"
-      },
-      {
-        "amount": 5.0,
-        "id": 20420,
-        "name": "recipe makers chicken bruschetta pasta",
-        "unit": "servings"
-      },
-      {
-        "amount": 1.5,
-        "id": 10010062,
-        "name": "pork chops",
-        "unit": "lb"
-      }
-    ]
-  },
-  {
     "id": 649073,
     "title": "Korean Saewoo Bokkeumbap (Shrimp Fried Rice)",
     "extendedIngredients": [
@@ -42,86 +12,14 @@
       {
         "amount": 5.0,
         "id": 10220445,
-        "name": "rice",
+        "name": "cake",
         "unit": "cups"
       },
       {
         "amount": 5.0,
         "id": 10220445,
-        "name": "rice",
+        "name": "salmon",
         "unit": "cups"
-      },
-      {
-        "amount": 2.0,
-        "id": 4669,
-        "name": "vegetable oil",
-        "unit": "tbsp"
-      },
-      {
-        "amount": 0.5,
-        "id": 11333,
-        "name": "bell pepper",
-        "unit": ""
-      },
-      {
-        "amount": 0.5,
-        "id": 11282,
-        "name": "onion",
-        "unit": ""
-      },
-      {
-        "amount": 0.5,
-        "id": 11177,
-        "name": "kernel corn",
-        "unit": "can"
-      },
-      {
-        "amount": 1.0,
-        "id": 11124,
-        "name": "carrot",
-        "unit": ""
-      },
-      {
-        "amount": 2.0,
-        "id": 11215,
-        "name": "garlic",
-        "unit": "cloves"
-      },
-      {
-        "amount": 2.0,
-        "id": 15270,
-        "name": "shrimp",
-        "unit": "cups"
-      },
-      {
-        "amount": 3.0,
-        "id": 6176,
-        "name": "oyster sauce",
-        "unit": "tbsp"
-      },
-      {
-        "amount": 2.0,
-        "id": 16124,
-        "name": "soy sauce",
-        "unit": "tbsp"
-      },
-      {
-        "amount": 1.0,
-        "id": 1001,
-        "name": "butter",
-        "unit": "tbsp"
-      },
-      {
-        "amount": 0.5,
-        "id": 2047,
-        "name": "salt",
-        "unit": "tsp"
-      },
-      {
-        "amount": 2.0,
-        "id": 1123,
-        "name": "scrambled eggs",
-        "unit": ""
       }
     ]
   }

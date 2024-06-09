@@ -60,5 +60,27 @@ public class HandleJSON {
         }
     }
 
+    public List<String> getBoodschappenLijst(){
+        List<String> boodschappenLijst;
+        try(FileReader reader = new FileReader("src/util/Boodschappenlijst.json")){
+            Gson gson = new Gson();
+            boodschappenLijst = gson.fromJson(reader, List.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return boodschappenLijst;
+    }
+
+    public void saveBoodschappenLijst(List<String> boodschappenLijst){
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try (FileWriter writer = new FileWriter("src/util/BoodschappenLijst.json")) {
+            gson.toJson(boodschappenLijst, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

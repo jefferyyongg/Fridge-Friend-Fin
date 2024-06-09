@@ -1,9 +1,8 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class Fridge {
+public class Fridge extends Observable {
     private List<String> fridge;
 
     public Fridge(List<String> fridge) {
@@ -44,5 +43,22 @@ public class Fridge {
         } else {
             System.out.println("Ongeldige Invoer");
         }
+    }
+
+    public void getUniqueIngredients(List<String> ingredienten){
+        List<String> uniqueIngredients = new ArrayList<>();
+        for(String s : ingredienten){
+            uniqueIngredients.add(s);
+        }
+
+        for(int i = 0; i < uniqueIngredients.size(); i++){
+            for(int j = 0; j < fridge.size(); j++){
+                if(uniqueIngredients.contains(fridge.get(j))){
+                    uniqueIngredients.remove(i);
+                }
+            }
+        }
+        setChanged();
+        notifyObservers(uniqueIngredients);
     }
 }

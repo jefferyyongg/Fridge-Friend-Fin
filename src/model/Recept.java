@@ -3,6 +3,7 @@ import java.util.List;
 
 public class Recept {
     private int id;
+
     private String title;
     private List<ExtendedIngredient> extendedIngredients;
 

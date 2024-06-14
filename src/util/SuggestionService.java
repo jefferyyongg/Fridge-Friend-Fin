@@ -37,5 +37,4 @@ public class SuggestionService extends ApiService {
         zoekObject.setResults(recepten);
         return zoekObject;
     }
-
 }

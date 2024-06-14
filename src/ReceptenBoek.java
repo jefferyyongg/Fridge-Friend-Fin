@@ -39,6 +39,9 @@ public class ReceptenBoek {
     public List<String> getIngredienten(){
         List<String> ingredienten = new ArrayList<>();
         for (Recept recept : receptenBoek) {
+            if(recept.getExtendedIngredients() == null){
+                return new ArrayList<>();
+            }
             for(Recept.ExtendedIngredient ingredient : recept.getExtendedIngredients()){
                 ingredienten.add(ingredient.getName());
             }

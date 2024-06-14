@@ -36,5 +36,4 @@ public class QueryService extends ApiService {
 
         return zoekObject;
     }
-
 }
